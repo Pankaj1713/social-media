@@ -89,5 +89,4 @@ function SocialMediaPost() {
   );
 }
 
-// Use <SocialMediaPost /> in your main component
 export default SocialMediaPost;
