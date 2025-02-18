@@ -1,0 +1,55 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import Login from "./components/Auth/Login";
+import Register from "./components/Auth/RegisterForm";
+import ForgotPassword from "./components/Auth/ForgotPassword";
+import ResetPassword from "./components/Auth/ResetPassword";
+import CreatePost from "./components/CreatePost";
+import PostCard from "./components/PostCard";
+// import ProfileCard from "./components/ProfileCard";
+
+const Home = () => {
+  return (
+    <div className="flex flex-col h-screen container m-auto">
+      {/* Navbar at the top */}
+      <Navbar />
+      <div className="flex flex-grow mt-10 pb-10 md:mt-auto">
+        {/* Sidebar on the left */}
+        <Sidebar />
+        <div className="w-[555px] md:ml-28 mt-5 flex flex-col gap-10">
+          <CreatePost />
+          <PostCard />
+          {/* <ProfileCard /> */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        {/* Authentication Routes */}
+        <Route path="/" element={<LoginRedirect />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+        {/* Main Home Page */}
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
+  );
+};
+
+// Redirect to home if already logged in
+const LoginRedirect = () => {
+  const isAuthenticated = localStorage.getItem("authToken"); // Simulating auth check
+  return isAuthenticated ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />;
+};
+
+export default App;
